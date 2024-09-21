@@ -6,6 +6,12 @@
 html{
     font-size: 62.5%;
 }
+.gradiant_div{
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    position: absolute;
+}
 .container{
     height: 100vh;
     width: 100%;
@@ -14,6 +20,7 @@ html{
     align-items: center
 }
 .hex_btns{
+    display: flex;
     button{
         padding: .8rem 2.5rem;
         font-size: large;
@@ -29,6 +36,11 @@ html{
     color: white;
     border: none;
     
+}
+.hex_btn_div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .gr_types_btns{
     button{
