@@ -1,5 +1,5 @@
 import React from "react";
-import Gradiant_Generator from './components/GradiantGenerator/Gradiant_Generator'
+import Gradiant_Generator from './components/Gradiant_Generator'
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 function App() {
   return (

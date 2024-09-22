@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {gradiant_to_img} from './utilities/utilities.js'
-import '../GradiantGenerator/Gradiant_Generator.scss'
+import {gradiant_to_img} from '../utilities/utilities.js'
+import './Gradiant_Generator.scss'
 
 const Main = () => {
     const [hex_code, sethex_code] = useState('#cbffe0');
@@ -8,11 +8,12 @@ const Main = () => {
     const [hex_code_3, sethex_code_3] = useState('#bf7878');
     const [hexRange, setHexRange] = useState({
         hex1: 0,
-        hex2: 0,
-        hex3: 0
+        hex2: 50,
+        hex3: 100
     })
     const [gradiant, setGradian] = useState('linear-gradient')
     const [gradiantType, setGradiantType] = useState("to Right")
+    const [conicAngle, setConicAngle] = useState(0)
 
     const hex_generator = (code_index)=>{
         let hex_values = '0123456789abcdef'
@@ -30,12 +31,11 @@ const Main = () => {
     }
     const gradiant_changer = (gradiant)=>{
         setGradian(gradiant);
-        setGradiantType(gradiant === 'linear-gradient' ? 'to Right' : (gradiant === 'radial-gradient' ? 'circle' : 'from 0deg'))
+        setGradiantType(gradiant === 'linear-gradient' ? 'to Right' : (gradiant === 'radial-gradient' ? 'circle' : `from ${conicAngle}deg`))
     }
 
     const style = {
-        background: `${gradiant}(${gradiantType},${hex_code}, ${hex_code_2}, ${hex_code_3})`
-        // background: `${gradiant}(${gradiantType},${hex_code}${hexRange.hex1}, ${hex_code_2}${hexRange.hex2}, ${hex_code_3}${hexRange.hex3})`
+        background: `${gradiant}(${gradiantType},${hex_code} ${hexRange.hex1}%, ${hex_code_2} ${hexRange.hex2}%, ${hex_code_3} ${hexRange.hex3}%)`
     }
     const btn_Style = {
         backgroundColor: `${hex_code}`,
@@ -54,7 +54,7 @@ const Main = () => {
                         <div className="hex_btns">
                             <div className="hex_btn_div">
                                 <input type="range" name="hex1" id="hex1" value={hexRange.hex1} min={0} max={100} 
-                                    onChange={(e) => setHexRange({hex1: e.target.value})}
+                                    onChange={(e) => setHexRange({...hexRange, hex1: e.target.value})}
                                 />
 
                                 <button onClick={() => hex_generator('code_1')}>
@@ -67,9 +67,10 @@ const Main = () => {
                                 }}
                                 />
                             </div>
+
                             <div className="hex_btn_div">
                                 <input type="range" name="hex2" id="hex2" value={hexRange.hex2} min={0} max={100} 
-                                    onChange={(e) => setHexRange({hex2: e.target.value})}    
+                                    onChange={(e) => setHexRange({...hexRange, hex2: e.target.value})}    
                                 />
 
                                 <button onClick={() => hex_generator('code_2')}>
@@ -80,14 +81,18 @@ const Main = () => {
                                       sethex_code_2(e.target.value)
                                     }}/>
                             </div>
+
                             <div className="hex_btn_div">
+                                <span>x</span>
+                                
                                 <input type="range" name="hex3" id="hex3" value={hexRange.hex3} min={0} max={100}  
-                                     onChange={(e) => setHexRange({hex3: e.target.value})}
+                                     onChange={(e) => setHexRange({...hexRange, hex3: e.target.value})}
                                 />
 
                                 <button onClick={() => hex_generator('code_3')}>
                                     { hex_code_3 === '' ? 'Click Me' : hex_code_3 }
                                 </button>
+
                                 <input type="color" value={hex_code_3} name="color2" id="color 2" 
                                   onChange={(e) => {
                                     sethex_code_3(e.target.value)
@@ -112,19 +117,39 @@ const Main = () => {
                         </div>
                         <div className="gr_types_selectors">
                             {
-                                gradiant === 'linear-gradient' && 
-                                <select
-                                title="selector"
-                                id="type_Selector"
-                                value={gradiantType}
-                                className="linear_selector"
-                                onChange={e => setGradiantType(e.target.value)}
-                                >
-                                    <option value='to Right'>Left to Right</option>
-                                    <option value='to Left'>Right to Left</option>
-                                    <option value='to Bottom'>Top to Bottom</option>
-                                    <option value='to Top'>Bottom to Top</option>
-                                </select>
+                                gradiant === 'linear-gradient' ? 
+                                <>
+                                    <select
+                                        title="selector"
+                                        id="type_Selector"
+                                        value={gradiantType}
+                                        className="linear_selector"
+                                        onChange={e => setGradiantType(e.target.value)}
+                                    >
+                                        <option value='to Right'>Left to Right</option>
+                                        <option value='to Left'>Right to Left</option>
+                                        <option value='to Bottom'>Top to Bottom</option>
+                                        <option value='to Top'>Bottom to Top</option>
+                                    </select>
+                                    <input type="range" name="conicAngle" id="conicAngle" value={conicAngle} min={0} max={360} 
+                                        onChange={function handleAngle(e){
+                                            setConicAngle(e.target.value)
+                                            setGradiantType(`${e.target.value}deg`)
+                                        }    
+                                        } 
+                                    />
+                                </>
+
+                                :
+
+                                gradiant === 'conic-gradient' && 
+                                <input type="range" name="conicAngle" id="conicAngle" value={conicAngle} min={0} max={360} 
+                                    onChange={function handleAngle(e){
+                                        setConicAngle(e.target.value)
+                                        setGradiantType(`from ${e.target.value}deg`)
+                                    }    
+                                    } 
+                                />
                             }
                         </div>
                         <div className="gradiant_info" >
