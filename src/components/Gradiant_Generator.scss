@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 html{
-    font-size: 62.5%;
+    font-size: 10px;
 }
 .gradiant_div{
     width: 100vw;
@@ -21,6 +21,7 @@ html{
 }
 .hex_btns{
     display: flex;
+    flex-wrap: wrap;
     button{
         padding: .8rem 2.5rem;
         font-size: large;
@@ -41,6 +42,16 @@ html{
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 7px 4px;
+    button{
+        width: 12rem;
+        height: 4rem;
+        font-size: 1.8rem;
+        text-shadow: 1px 1px 1px gray;
+    }
+    input{
+        width: 13rem;
+    }
 }
 .gr_types_btns{
     button{
@@ -50,12 +61,13 @@ html{
     }
 }
 .linear_selector{
-    padding: 8px;
+    padding: .8rem;
     font-size: larger;
-    margin: 5px 13px;
-    border-radius: 20px;
+    margin: .5 1.3rem;
+    border-radius: 2.0rem;
 }
 .gradiant_info{
+    display: flex;
     background: rgba(243, 235, 235, 0.43);
     -webkit-backdrop-filter: blur(3px);
     backdrop-filter: blur(3px);
@@ -65,4 +77,39 @@ html{
     border-radius: 1.5rem;
     font-family: sans-serif;
     font-size: 1.8rem;
+}
+
+.utitlities button{
+    background: none;
+    border: none;
+}
+
+.utilitiesImg{
+    width: 3.5rem;
+    margin: 0px 2px;
+}
+
+.utilitiesImg:hover{
+    scale: 1.13;
+}
+
+@media (max-width: 400px) {
+    html{
+        font-size: 9px;
+    }
+}
+
+@media (max-width: 320px) {
+    html{
+        font-size: 8px;
+    }
+    .gradiant_info{
+        flex-direction: column-reverse;
+    }
+}
+
+@media (max-width: 240px) {
+    html{
+        font-size: 7px;
+    }
 }

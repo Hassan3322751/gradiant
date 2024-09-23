@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {gradiant_to_img} from '../utilities/utilities.js'
+import {gradiant_to_img, copyInfo} from '../utilities/utilities.js'
 import './Gradiant_Generator.scss'
 
 const Main = () => {
@@ -15,6 +15,8 @@ const Main = () => {
     const [gradiantType, setGradiantType] = useState("to Right")
     const [conicAngle, setConicAngle] = useState(0)
 
+    const [copyImg, setCopyImg] = useState('./copy_5844601.png')
+
     const hex_generator = (code_index)=>{
         let hex_values = '0123456789abcdef'
         let hex = '#';
@@ -29,6 +31,7 @@ const Main = () => {
             sethex_code_3(hex)
         }
     }
+
     const gradiant_changer = (gradiant)=>{
         setGradian(gradiant);
         setGradiantType(gradiant === 'linear-gradient' ? 'to Right' : (gradiant === 'radial-gradient' ? 'circle' : `from ${conicAngle}deg`))
@@ -83,8 +86,6 @@ const Main = () => {
                             </div>
 
                             <div className="hex_btn_div">
-                                <span>x</span>
-                                
                                 <input type="range" name="hex3" id="hex3" value={hexRange.hex3} min={0} max={100}  
                                      onChange={(e) => setHexRange({...hexRange, hex3: e.target.value})}
                                 />
@@ -99,6 +100,7 @@ const Main = () => {
                                 }}/>
                             </div>
                         </div>
+                        
                         <div className="gr_types_btns">
                             {
                                 [
@@ -115,6 +117,7 @@ const Main = () => {
                                 ))
                             }
                         </div>
+
                         <div className="gr_types_selectors">
                             {
                                 gradiant === 'linear-gradient' ? 
@@ -152,17 +155,25 @@ const Main = () => {
                                 />
                             }
                         </div>
-                        <div className="gradiant_info" >
-                            <div>Color Code 1 : {hex_code}</div>
-                            <div>Color Code 2 : {hex_code_2}</div>
-                            <div>Color Code 2 : {hex_code_3}</div>
+                        <div className="gradiant_info">
                             <div>
-                                CSS Gradiant_Code : {gradiant}({gradiantType ? gradiantType : ''},{hex_code}, {hex_code_2})
+                                <p id="info">
+                                    Color Code 1 : {hex_code}
+                                        <br/>
+                                    Color Code 2 : {hex_code_2}
+                                        <br/>
+                                    Color Code 2 : {hex_code_3}
+                                        <br/>
+                                    CSS Gradiant_Code : {gradiant}({gradiantType ? gradiantType : ''}, {hex_code}  {hexRange.hex1}%, {hex_code_2} {hexRange.hex2}%, {hex_code_3} {hexRange.hex3}%)
+                                </p>
                             </div>
-                            <div className="utitlities">
-                                <button className="copyCode">Copy</button>
-                                <button className="saveAsJpg" onClick={() => gradiant_to_img()}>Image</button>
-                                {/* <button className="saveAsSvg" onClick={() => gradiant_to_svg()}>Svg</button> */}
+                            <div className="utitlities d-inline">
+                                <button className="copyCode" onClick={() => copyInfo(setCopyImg)} >
+                                    <img src={copyImg} alt="CopyCode" title="Copy Info" className="utilitiesImg" />
+                                </button>
+                                <button className="saveAsJpg" onClick={() => gradiant_to_img()}>
+                                    <img src="./download-1915753_640.png" alt="Download" title="Download Gradiant" className="utilitiesImg" />
+                                </button>
                             </div>
                         </div>
                     </div>    
